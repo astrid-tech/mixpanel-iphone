@@ -397,23 +397,7 @@ static NSString *defaultProjectToken;
 
 - (NSString *)defaultDistinctId
 {
-    NSString *distinctId;
-#if defined(MIXPANEL_MACOS)
-    distinctId = [self macOSIdentifier];
-#else
-    distinctId = [self IFA];
-#endif
-
-#if !defined(MIXPANEL_WATCHOS) && !defined(MIXPANEL_MACOS)
-    if (!distinctId && NSClassFromString(@"UIDevice")) {
-        distinctId = [[UIDevice currentDevice].identifierForVendor UUIDString];
-    }
-#endif
-    if (!distinctId) {
-        MPLogInfo(@"%@ error getting device identifier: falling back to uuid", self);
-        distinctId = [[NSUUID UUID] UUIDString];
-    }
-    return distinctId;
+    return [[NSUUID UUID] UUIDString];
 }
 
 
